@@ -5,11 +5,11 @@
              <img src="../../assets/images/logo_index.png" alt class="logoimg" />
         </div>
 
-      <el-form width="400" height="300">
-          <el-form-item>
+      <el-form width="400" height="300" :rules="rules" ref="loginForm" v-model="formData" :model="formData">
+          <el-form-item prop="mobile">
             <el-input v-model="formData.mobile" placeholder="请输入手机号码"></el-input>
          </el-form-item>
-         <el-form-item>
+         <el-form-item prop="code">
             <el-input v-model="formData.code" placeholder="请输入验证码" class="leftinput"></el-input>
             <el-button style="float:right">获取验证码</el-button>
          </el-form-item>
@@ -30,17 +30,46 @@
 <script>
 export default {
   data () {
+    const checkMobile = (rule, value, callback) => {
+      // rule 是
+      if (/^1[3-9]\d{9}$/.test(value)) {
+        callback()
+      } else {
+        callback(Error('手机号码格式不正确'))
+      }
+    }
+
     return {
       formData: {
-        mobile: '13911111111',
-        code: '246810'
+        mobile: '',
+        code: ''
       },
-      checked: true
+      // loginForm: null,
+      checked: true,
+      rules: {
+        mobile: [{ validator: checkMobile, trigger: 'blur' }
+
+        ],
+        code: [{ required: true, message: '验证码必填', trigger: 'blur' }]
+      }
     }
   },
   methods: {
     Login () {
-
+      // 点击登录按钮的时候，同时也要进行验证
+      this.$refs.loginForm.validate(async (valid) => {
+        //
+        if (valid) {
+          // 如果验证通过，那么，我们就登录进入首页
+          // 发送请求，进入首页
+          const { data: { data } } = await this.axios.post('http://ttapi.research.itcast.cn/mp/v1_0/authorizations', this.formData)
+          console.log(data)
+          // 这个时候通过返回时获取token
+          // window.sessionStorage.getItem(data.token)
+          this.$router.push('/')
+          // 如果没有，那么，就要求再次输入进行验证
+        }
+      })
     }
   }
 }
