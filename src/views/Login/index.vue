@@ -41,8 +41,8 @@ export default {
 
     return {
       formData: {
-        mobile: '',
-        code: ''
+        mobile: '13911111111',
+        code: '246810'
       },
       // loginForm: null,
       checked: true,
