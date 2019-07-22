@@ -1,7 +1,7 @@
 <template>
-<div class="content-container">
-内容管理
-</div>
+    <div class="setting-container">
+        个人设置
+    </div>
 </template>
 
 <script>

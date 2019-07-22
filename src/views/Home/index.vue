@@ -3,8 +3,9 @@
     <el-container>
       <el-aside  :class="{close2:collapse}" class="homeaside" style="width:200px">
         <div class="asidlogo" :class="{close:collapse}" ></div>
+        <!-- default-active 默认的路径，这个时候就不能再写index的值了，我们用$route.path 同时就要是绑定这个属性了，前加上冒号-->
         <el-menu
-          default-active="1"
+          :default-active="$route.path"
           class="el-menu-vertical-demo"
           background-color="#002033"
           text-color="#fff"
@@ -12,32 +13,33 @@
           style="border:0"
           :collapse="collapse"
           :collapse-transition="false"
+          router
         >
-          <el-menu-item index="1">
+          <el-menu-item index="/">
             <i class="el-icon-house"></i>
             <span slot="title">首页</span>
           </el-menu-item>
-          <el-menu-item index="2">
+          <el-menu-item index="/content">
             <i class="el-icon-menu"></i>
             <span slot="title">内容管理</span>
           </el-menu-item>
-          <el-menu-item index="3">
+          <el-menu-item index="/images">
             <i class="el-icon-document"></i>
             <span slot="title">素材管理</span>
           </el-menu-item>
-          <el-menu-item index="4">
+          <el-menu-item index="/publish">
             <i class="el-icon-position"></i>
             <span slot="title">发布文章</span>
           </el-menu-item>
-          <el-menu-item index="5">
+          <el-menu-item index="/comments">
             <i class="el-icon-chat-dot-round"></i>
             <span slot="title">评论管理</span>
           </el-menu-item>
-          <el-menu-item index="6">
+          <el-menu-item index="/fans">
             <i class="el-icon-present"></i>
             <span slot="title">粉丝管理</span>
           </el-menu-item>
-          <el-menu-item index="7">
+          <el-menu-item index="/setting">
             <i class="el-icon-setting"></i>
             <span slot="title">个人设置</span>
           </el-menu-item>
@@ -62,8 +64,7 @@
           </div>
         </el-header>
         <el-main>
-          <p>欢迎使用黑马头条</p>
-          <img src="../../assets/images/welcome.jpg" alt />
+          <router-view></router-view>
         </el-main>
       </el-container>
     </el-container>
@@ -146,8 +147,6 @@ body {
       }
     }
   }
-  .el-main {
-    text-align: center;
-  }
+
 }
 </style>
