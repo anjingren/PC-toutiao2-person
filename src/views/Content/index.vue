@@ -1,6 +1,8 @@
 <template>
 <div class="content-container">
-内容管理
+    <el-card>
+
+    </el-card>
 </div>
 </template>
 
