@@ -20,7 +20,7 @@
              </span>
          </el-form-item>
         <el-form-item>
-            <el-button type="primary" class="loginbtn" @click="Login()">登录</el-button>
+            <el-button type="primary" class="loginbtn" @click="Login">登录</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -63,11 +63,15 @@ export default {
           // 如果验证通过，那么，我们就登录进入首页
           // 发送请求，进入首页
           const { data: { data } } = await this.axios.post('http://ttapi.research.itcast.cn/mp/v1_0/authorizations', this.formData)
-          console.log(data)
-          // 这个时候通过返回时获取token
-          // window.sessionStorage.getItem(data.token)
+          // console.log(data)
+          // 这个时候通过返回时获取token。token是一个字符串，但是我们要获取设置session，设置发送请求是需要的对象格式
+          // 设置session，前面是名字，后面是获取的内容,我们将其转变为一个字符串格式
+          // 现在是在返回的数据中有token，我们需要的是在登录后去设置这个token，而不是getItem，因为现在还没有，所以获取的回事null
+          // 所以，我们现在要进行setItem,本地存储token
+          // console.log(data.data.data)
+          window.sessionStorage.setItem('toutiao2', JSON.stringify(data.token))
+          // 设置token的时候，setItem没有返回值，所以，在打印user的时候，会是undefined
           this.$router.push('/')
-          // 如果没有，那么，就要求再次输入进行验证
         }
       })
     }
