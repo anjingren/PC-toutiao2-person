@@ -57,7 +57,7 @@
                 <i class="el-icon-arrow-down el-icon--right"></i>
               </span>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item icon="el-icon-unlock">退出登录</el-dropdown-item>
+                <el-dropdown-item icon="el-icon-unlock" @click.native="logout">退出登录</el-dropdown-item>
                 <el-dropdown-item icon="el-icon-setting">个人设置</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
@@ -82,6 +82,12 @@ export default {
     toogleIcon () {
       // 点击的时候，加上collapse的值要进行切换，再次点击，去掉class
       this.collapse = !this.collapse
+    },
+    logout () {
+      // 退出登录要把session清除  setItem  getItem  removeItem
+      window.sessionStorage.removeItem('toutiao2')
+      // 然回到登录页面
+      this.$router.push('/login')
     }
   }
 }

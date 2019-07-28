@@ -1,8 +1,17 @@
 import axios from 'axios'
-
+import JSONBig from 'json-bigint'
 var instance = axios.create({
-  baseURL: 'http://ttapi.research.itcast.cn/mp/v1_0/'
-//   headers: { Authorization: 'Bearer ' + JSON.parse(window.sessionStorage.getItem('toutiao2')) }
+  baseURL: 'http://ttapi.research.itcast.cn/mp/v1_0/',
+  //   headers: { Authorization: 'Bearer ' + JSON.parse(window.sessionStorage.getItem('toutiao2')) }
+  // 利用transformResponse在返回前对数据进行处理
+  transformResponse: [function (data) {
+  // 对 data 进行任意转换处理
+  // 同时进行严格的数据判断，有的事件并没有返回数据
+    if (data) {
+      return JSONBig.parse(data)
+    }
+    return data
+  }]
 })
 
 // 不能在全局的axios中配置请求头，原因是因为，如果载没有登录之前，我们发送axios请求，那么，token就是null，会一直报错，无法进行正常登录
@@ -15,7 +24,7 @@ instance.interceptors.request.use(function (config) {
   console.log(user)
   // 判断是否有user，如果有，就正常发送请求，如果没有就回到登录界面
   if (user) {
-    config.headers = { Authorization: 'Bearer ' + JSON.parse(user).token }
+    config.headers = { Authorization: 'Bearer ' + JSON.parse(user) }
   }
   return config
 }, function (error) {
@@ -30,7 +39,7 @@ instance.interceptors.response.use(function (response) {
   // 对于响应回来的状态码进行判断
   if (error.response.status === 401) {
     // 如果等于401，重新登录
-    location.hash('#/login')
+    location.hash = '#/login'
   }
   return Promise.reject(error)
 })
