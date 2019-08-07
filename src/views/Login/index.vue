@@ -69,7 +69,7 @@ export default {
           // 现在是在返回的数据中有token，我们需要的是在登录后去设置这个token，而不是getItem，因为现在还没有，所以获取的回事null
           // 所以，我们现在要进行setItem,本地存储token
           // console.log(data.data.data)
-          window.sessionStorage.setItem('toutiao2', JSON.stringify(data.token))
+          window.sessionStorage.setItem('toutiao2', JSON.stringify(data))
           // 设置token的时候，setItem没有返回值，所以，在打印user的时候，会是undefined
           this.$router.push('/')
         }

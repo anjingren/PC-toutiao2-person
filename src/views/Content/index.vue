@@ -2,12 +2,7 @@
   <div class="content-container">
     <el-card>
       <div slot="header" class="clearfix">
-        <el-breadcrumb separator="/">
-          <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>
-            <a href="/">内容管理</a>
-          </el-breadcrumb-item>
-        </el-breadcrumb>
+        <bread-nav>内容管理</bread-nav>
       </div>
       <el-form :model="reqparams">
         <el-form-item label="状态">

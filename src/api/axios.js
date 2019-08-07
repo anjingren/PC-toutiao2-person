@@ -21,10 +21,10 @@ instance.interceptors.request.use(function (config) {
   // 在发送请求之前做些什么
   // 在发送请求之前做的,在请求前进行判断，是否有哦user，没有user，我们就回到登录页面
   var user = window.sessionStorage.getItem('toutiao2')
-  console.log(user)
+  // console.log(user)
   // 判断是否有user，如果有，就正常发送请求，如果没有就回到登录界面
   if (user) {
-    config.headers = { Authorization: 'Bearer ' + JSON.parse(user) }
+    config.headers = { Authorization: 'Bearer ' + JSON.parse(user).token }
   }
   return config
 }, function (error) {
@@ -37,10 +37,11 @@ instance.interceptors.response.use(function (response) {
   return response
 }, function (error) {
   // 对于响应回来的状态码进行判断
-  if (error.response.status === 401) {
-    // 如果等于401，重新登录
-    location.hash = '#/login'
-  }
+  console.log(error)
+  // if (error.response.status === 401) {
+  //   // 如果等于401，重新登录
+  //   location.hash = '#/login'
+  // }
   return Promise.reject(error)
 })
 
